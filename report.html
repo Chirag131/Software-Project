@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SE Mini Project Report — SnipLink URL Shortener</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @page {
+            size: A4;
+            margin: 20mm 18mm 20mm 18mm;
+        }
+
+        body {
+            font-family: 'Times New Roman', 'Roboto', serif;
+            font-size: 11.5pt;
+            line-height: 1.55;
+            color: #1a1a1a;
+            background: #fff;
+        }
+
+        .page { page-break-after: always; }
+        .page:last-child { page-break-after: avoid; }
+
+        /* Header */
+        .report-header {
+            text-align: center;
+            border-bottom: 2.5px solid #2563eb;
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+        }
+        .report-header h1 {
+            font-size: 18pt;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+        .report-header .subtitle {
+            font-size: 13pt;
+            color: #2563eb;
+            font-weight: 500;
+        }
+
+        /* Student Details Table */
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 11pt;
+        }
+        .details-table td {
+            padding: 5px 10px;
+            border: 1px solid #d1d5db;
+        }
+        .details-table td:first-child {
+            font-weight: 700;
+            width: 180px;
+            background: #f0f4ff;
+            color: #1e3a5f;
+        }
+
+        /* Sections */
+        h2 {
+            font-size: 13pt;
+            font-weight: 700;
+            color: #1e3a5f;
+            border-left: 4px solid #2563eb;
+            padding-left: 10px;
+            margin: 16px 0 8px;
+        }
+
+        h3 {
+            font-size: 11.5pt;
+            font-weight: 700;
+            color: #374151;
+            margin: 10px 0 5px;
+        }
+
+        p, li {
+            font-size: 11pt;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        li { margin-bottom: 3px; }
+
+        .abstract-box {
+            background: #f0f4ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        /* Diagram container */
+        .diagram-container {
+            text-align: center;
+            margin: 12px 0;
+            padding: 10px;
+            background: #fafbff;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+        }
+        .diagram-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .diagram-caption {
+            font-size: 10pt;
+            color: #6b7280;
+            font-style: italic;
+            margin-top: 6px;
+        }
+
+        /* Code block */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 14px;
+            font-family: 'Courier New', monospace;
+            font-size: 9.5pt;
+            line-height: 1.5;
+            margin: 8px 0;
+            overflow-x: auto;
+        }
+
+        /* Feature list */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 16px;
+            margin: 8px 0;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            font-size: 10.5pt;
+        }
+        .feature-icon {
+            font-size: 12pt;
+            flex-shrink: 0;
+        }
+
+        /* SDG badge */
+        .sdg-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 11pt;
+        }
+
+        /* QR section */
+        .qr-section {
+            text-align: center;
+            margin: 12px 0;
+        }
+        .qr-section img {
+            width: 120px;
+            height: 120px;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            padding: 4px;
+            background: white;
+        }
+
+        /* Link */
+        .repo-link {
+            color: #2563eb;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        /* Diagram SVGs inline */
+        .uml-diagram {
+            margin: 10px auto;
+            max-width: 95%;
+        }
+
+        table.arch-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+            font-size: 10.5pt;
+        }
+        table.arch-table th {
+            background: #1e3a5f;
+            color: white;
+            padding: 6px 10px;
+            text-align: left;
+        }
+        table.arch-table td {
+            padding: 5px 10px;
+            border: 1px solid #d1d5db;
+        }
+        table.arch-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .compact-list li {
+            font-size: 10.5pt;
+            margin-bottom: 2px;
+        }
+
+        .page-num {
+            text-align: center;
+            font-size: 9pt;
+            color: #9ca3af;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="page">
+    <div class="report-header">
+        <h1>MINI PROJECT — SOFTWARE ENGINEERING</h1>
+        <div class="subtitle">SnipLink — URL Shortener Web Application</div>
+    </div>
+
+    <!-- Student Details -->
+    <table class="details-table">
+        <tr><td>Student Name(s)</td><td>__________</td></tr>
+        <tr><td>Enrollment Number(s)</td><td>__________</td></tr>
+        <tr><td>Course / Semester</td><td>B.Tech IT / 5th Semester</td></tr>
+        <tr><td>Subject</td><td>Software Engineering</td></tr>
+    </table>
+
+    <!-- Abstract -->
+    <h2>Abstract</h2>
+    <div class="abstract-box">
+        Long URLs are difficult to share, remember, and track across digital platforms. This project presents <strong>SnipLink</strong>, a client-side URL shortener web application built using HTML, CSS, and JavaScript. The system generates unique short codes using base62 encoding, persists link data via browser LocalStorage, and provides real-time click tracking and QR code generation. SnipLink features a modern glassmorphism UI with responsive design, animated counters, and toast notifications. The application demonstrates core software engineering principles including OOP design patterns, modular architecture, and iterative development with version control.
+    </div>
+
+    <!-- Problem Statement -->
+    <h2>Problem Statement</h2>
+    <p>
+        Sharing lengthy URLs across messaging platforms, social media, and print media leads to broken links, poor readability, and an inability to track link engagement. Existing URL shorteners like Bit.ly require account creation and depend on external servers. There is a need for a <strong>lightweight, privacy-first URL shortener</strong> that works entirely in the browser without backend dependencies, while still offering analytics and QR code functionality.
+    </p>
+
+    <!-- Objectives -->
+    <h2>Objectives</h2>
+    <ol>
+        <li>Develop a client-side URL shortening system using base62 encoding for unique code generation.</li>
+        <li>Implement persistent link storage with click tracking using browser LocalStorage.</li>
+        <li>Provide auto-generated QR codes and one-click clipboard copy for every shortened URL.</li>
+        <li>Build a responsive, visually appealing UI following modern web design principles.</li>
+    </ol>
+
+    <!-- Methodology -->
+    <h2>Methodology / Approach</h2>
+    <p>The project follows the <strong>Agile (Iterative) development model</strong> with incremental feature additions tracked via Git commits. The architecture uses an Object-Oriented design with three core classes.</p>
+
+    <h3>1. System Architecture (Component Diagram)</h3>
+    <div class="diagram-container">
+        <pre style="font-family: monospace; font-size: 9pt; text-align: left; display: inline-block;">
+┌─────────────────────────────────────────────────────┐
+│                   SnipLink Application              │
+├──────────────┬──────────────┬───────────────────────┤
+│  UIController│  URLShortener│   StorageManager      │
+│              │    Engine    │                       │
+│ • bindEvents │ • generateCode│ • getAll()           │
+│ • handleShor │   (base62)   │ • add() / remove()   │
+│   ten()      │ • isValidUrl │ • incrementClicks()   │
+│ • renderHist │ • shorten()  │ • clear()            │
+│   ory()      │ • getQRCode  │                      │
+│ • renderStat │   Url()      │   [LocalStorage]     │
+│   s()        │              │                      │
+│ • showToast()│              │                      │
+└──────────────┴──────────────┴───────────────────────┘
+         │                              │
+         ▼                              ▼
+   ┌───────────┐              ┌──────────────────┐
+   │  DOM/HTML  │              │ Browser Storage  │
+   │  (index.   │              │  (localStorage)  │
+   │   html)    │              └──────────────────┘
+   └───────────┘
+        </pre>
+        <div class="diagram-caption">Fig 1: System Architecture — Component Diagram</div>
+    </div>
+
+    <h3>2. Use Case Diagram</h3>
+    <div class="diagram-container">
+        <pre style="font-family: monospace; font-size: 9pt; text-align: left; display: inline-block;">
+                        ┌─────────────────────┐
+                        │    SnipLink System   │
+                        ├─────────────────────┤
+        ┌───┐           │                     │
+        │   │──── Shorten URL ───────────────▶│
+        │   │           │                     │
+        │ U │──── Copy Short Link ──────────▶│
+        │ S │           │                     │
+        │ E │──── View Link History ────────▶│
+        │ R │           │                     │
+        │   │──── Track Clicks ─────────────▶│
+        │   │           │                     │
+        │   │──── Generate QR Code ─────────▶│
+        │   │           │                     │
+        │   │──── Delete / Clear Links ─────▶│
+        └───┘           │                     │
+                        └─────────────────────┘
+        </pre>
+        <div class="diagram-caption">Fig 2: Use Case Diagram</div>
+    </div>
+
+    <div class="page-num">Page 1 of 3</div>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="page">
+
+    <h3>3. Data Flow Diagram (DFD Level-0)</h3>
+    <div class="diagram-container">
+        <pre style="font-family: monospace; font-size: 9pt; text-align: left; display: inline-block;">
+  ┌──────┐     Long URL      ┌───────────────┐    Short Code     ┌─────────────┐
+  │ User │ ─────────────────▶ │  URL Shortener│ ────────────────▶ │ LocalStorage│
+  │      │                    │    Engine     │                   │   (Store)   │
+  │      │ ◀───────────────── │               │ ◀──────────────── │             │
+  └──────┘  Short URL + QR   └───────────────┘   Stored Entries  └─────────────┘
+                                     │
+                                     │ Click Event
+                                     ▼
+                              ┌─────────────┐
+                              │  Increment   │
+                              │  Click Count │
+                              └─────────────┘
+        </pre>
+        <div class="diagram-caption">Fig 3: Data Flow Diagram (Level-0)</div>
+    </div>
+
+    <h3>4. Class Diagram</h3>
+    <div class="diagram-container">
+        <pre style="font-family: monospace; font-size: 9pt; text-align: left; display: inline-block;">
+ ┌─────────────────────────┐  ┌────────────────────────┐  ┌──────────────────────┐
+ │     StorageManager      │  │     URLShortener        │  │     UIController     │
+ ├─────────────────────────┤  ├────────────────────────┤  ├──────────────────────┤
+ │ - key: string           │  │ - baseUrl: string      │  │ - storage: Storage   │
+ ├─────────────────────────┤  ├────────────────────────┤  │ - shortener: URL     │
+ │ + getAll(): Array       │  │ + generateCode(): str  │  ├──────────────────────┤
+ │ + save(entries): void   │  │ + isValidUrl(str): bool│  │ + handleShorten()    │
+ │ + add(entry): void      │  │ + shorten(url): Object │  │ + handleCopy()       │
+ │ + remove(code): void    │  │ + getQRCodeUrl(): str  │  │ + renderHistory()    │
+ │ + incrementClicks(): v  │  └────────────────────────┘  │ + renderStats()      │
+ │ + clear(): void         │                              │ + showToast(msg)     │
+ └─────────────────────────┘                              └──────────────────────┘
+        </pre>
+        <div class="diagram-caption">Fig 4: Class Diagram (OOP Structure)</div>
+    </div>
+
+    <h3>5. Activity Diagram — URL Shortening Flow</h3>
+    <div class="diagram-container">
+        <pre style="font-family: monospace; font-size: 9pt; text-align: left; display: inline-block;">
+              ● (Start)
+              │
+              ▼
+        ┌───────────┐
+        │ Enter URL │
+        └─────┬─────┘
+              ▼
+        ◇ Valid URL?
+       / \
+     No    Yes
+     │      │
+     ▼      ▼
+  Show   ┌──────────────┐
+  Error  │ Generate Code│
+  Toast  │  (base62)    │
+         └──────┬───────┘
+                ▼
+         ┌──────────────┐
+         │ Save to Local│
+         │   Storage    │
+         └──────┬───────┘
+                ▼
+         ┌──────────────┐
+         │ Display Short│
+         │ URL + QR Code│
+         └──────┬───────┘
+                ▼
+         ┌──────────────┐
+         │ Update Stats │
+         │  & History   │
+         └──────┬───────┘
+                ▼
+              ● (End)
+        </pre>
+        <div class="diagram-caption">Fig 5: Activity Diagram — Shorten URL Flow</div>
+    </div>
+
+    <!-- Implementation -->
+    <h2>Implementation & Output</h2>
+
+    <h3>Key Features</h3>
+    <div class="feature-grid">
+        <div class="feature-item"><span class="feature-icon">⚡</span> Instant URL shortening with base62 codes</div>
+        <div class="feature-item"><span class="feature-icon">📊</span> Real-time click tracking per link</div>
+        <div class="feature-item"><span class="feature-icon">📱</span> Auto QR code generation (API-based)</div>
+        <div class="feature-item"><span class="feature-icon">📋</span> One-click copy to clipboard</div>
+        <div class="feature-item"><span class="feature-icon">🗂️</span> Persistent link history (LocalStorage)</div>
+        <div class="feature-item"><span class="feature-icon">🎨</span> Glassmorphism dark-mode UI</div>
+        <div class="feature-item"><span class="feature-icon">📱</span> Fully responsive (mobile + desktop)</div>
+        <div class="feature-item"><span class="feature-icon">🔔</span> Toast notifications & animations</div>
+    </div>
+
+    <h3>Tech Stack</h3>
+    <table class="arch-table">
+        <tr><th>Layer</th><th>Technology</th><th>Purpose</th></tr>
+        <tr><td>Structure</td><td>HTML5</td><td>Semantic page layout</td></tr>
+        <tr><td>Styling</td><td>CSS3 (Custom Properties)</td><td>Glassmorphism, animations, responsive grid</td></tr>
+        <tr><td>Logic</td><td>JavaScript ES6+</td><td>OOP classes, DOM manipulation, LocalStorage API</td></tr>
+        <tr><td>QR API</td><td>qrserver.com</td><td>Dynamic QR code image generation</td></tr>
+        <tr><td>Fonts</td><td>Google Fonts (Inter)</td><td>Modern typography</td></tr>
+    </table>
+
+    <div class="page-num">Page 2 of 3</div>
+</div>
+
+<!-- ==================== PAGE 3 ==================== -->
+<div class="page">
+
+    <h3>Git Commit History (Version Control)</h3>
+    <div class="code-block">
+$ git log --oneline
+64e394d chore: add .gitignore and MIT LICENSE
+07b1e91 feat: implement URL shortening engine with storage, click tracking, and QR codes
+e82b250 style: add dark-mode glassmorphism CSS with animations and responsive design
+6f898ce feat: add HTML structure with hero, URL input, history, and stats sections
+f434443 docs: add project README with features and setup instructions
+    </div>
+
+    <!-- Results -->
+    <h2>Results</h2>
+    <ul>
+        <li>Successfully generates unique 6-character short codes for any valid HTTP/HTTPS URL.</li>
+        <li>Link history persists across browser sessions via LocalStorage.</li>
+        <li>Click counts are tracked accurately and displayed in real-time with animated counters.</li>
+        <li>QR codes are generated dynamically for every shortened URL using an external API.</li>
+        <li>Fully responsive UI tested on Chrome, Firefox, and Safari across desktop and mobile viewports.</li>
+    </ul>
+
+    <!-- Conclusion -->
+    <h2>Conclusion</h2>
+    <p>
+        This project successfully demonstrates the application of <strong>software engineering principles</strong> including Object-Oriented Design (three modular classes), iterative development with Git version control, and modern UI/UX design. The SnipLink URL shortener is fully functional, lightweight (no server required), and visually polished. Key learning outcomes include:
+    </p>
+    <ul class="compact-list">
+        <li>Applying <strong>OOP design patterns</strong> (Separation of Concerns) in JavaScript.</li>
+        <li>Using <strong>Git</strong> for incremental, well-documented development.</li>
+        <li>Implementing <strong>LocalStorage API</strong> for client-side data persistence.</li>
+        <li>Building <strong>responsive, accessible</strong> web interfaces with CSS custom properties and animations.</li>
+        <li>Integrating <strong>third-party APIs</strong> (QR code generation) into a client-side application.</li>
+    </ul>
+
+    <!-- Future Scope -->
+    <h2>Future Scope</h2>
+    <ol>
+        <li><strong>Backend Integration:</strong> Add Node.js/Express server with MongoDB for real, routable short URLs.</li>
+        <li><strong>User Authentication:</strong> Implement login/signup for personal link dashboards.</li>
+        <li><strong>Custom Aliases:</strong> Allow users to choose custom short codes (e.g., snip.link/my-link).</li>
+        <li><strong>Advanced Analytics:</strong> Geographic click tracking, referrer analysis, and time-series charts.</li>
+        <li><strong>Browser Extension:</strong> One-click shortening from any webpage via Chrome/Firefox extension.</li>
+    </ol>
+
+    <!-- Mapped SDG -->
+    <h2>Mapped SDG</h2>
+    <p>
+        <span class="sdg-badge">🎯 SDG 9 — Industry, Innovation & Infrastructure</span>
+    </p>
+    <p style="margin-top: 6px;">
+        The project promotes <strong>innovation in digital communication infrastructure</strong> by simplifying link sharing and providing accessible analytics tools — contributing to building resilient digital infrastructure.
+    </p>
+
+    <!-- GitHub Repository -->
+    <h2>GitHub Repository</h2>
+    <p>
+        <strong>Project Link:</strong> <a class="repo-link" href="https://github.com/your-username/sniplink-url-shortener">https://github.com/your-username/sniplink-url-shortener</a>
+    </p>
+
+    <!-- QR Code for GitHub -->
+    <h2>📱 QR Code (GitHub Repository)</h2>
+    <div class="qr-section">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://github.com/your-username/sniplink-url-shortener" alt="GitHub QR Code">
+        <p style="font-size: 9pt; color: #6b7280; margin-top: 6px;"><em>Scan to visit the GitHub repository</em></p>
+    </div>
+
+    <div class="page-num">Page 3 of 3</div>
+</div>
+
+</body>
+</html>
